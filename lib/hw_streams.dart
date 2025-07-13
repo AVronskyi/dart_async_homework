@@ -3,6 +3,7 @@ import 'dart:async';
 void main() async {
   await streamWithAwaitFor();
   await streamWithListen();
+  await periodicStream();
 }
 
 // Task 6: Стрім з чисел (fromIterable)
@@ -22,10 +23,18 @@ Future<void> streamWithListen() async {
   numbers.listen((number) {
     print('Число: $number');
   });
+  await Future.delayed(Duration(seconds: 1));
 }
 
 // Task 7: Зворотний відлік зі стріму (periodic)
-// TODO: Реалізувати periodic stream
+Future<void> periodicStream() async {
+  print('Task 7: periodic');
+  
+  Stream<int> numbers = Stream.periodic(Duration(seconds: 1), (count) => count + 1).take(10);
+  numbers.listen((number) {
+    print('$number...');
+  });
+}
 
 // Task 8: Робота з StreamController
 // TODO: Реалізувати StreamController 
