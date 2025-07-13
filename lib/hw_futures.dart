@@ -4,13 +4,14 @@ void main() async {
 
   String userAge = await fetchAge();
   print('Мені $userAge');
+
+  print('\n Task 3: sequential execution');
+  await sequential();
 }
 
 // Task 1: Асинхронне отримання імені
 Future<String> fetchName() async {
-  await Future.delayed(Duration(seconds: 1));
-  print('Завантажую...');
-  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 2));
   return 'Andrii';
 }
 
@@ -34,7 +35,15 @@ String getAgeWord(int age) {
 }
 
 // Task 3: Послідовне виконання Future
-// TODO: Реалізувати sequential execution
+Future<void> sequential() async {
+  Stopwatch stopwatch = Stopwatch();
+  stopwatch.start();
+  await fetchName();
+  await fetchAge();
+  stopwatch.stop();
+  
+  print('Час виконання: ${stopwatch.elapsedMilliseconds} мс');
+}
 
 // Task 4: Паралельне виконання Future
 // TODO: Реалізувати parallel execution
