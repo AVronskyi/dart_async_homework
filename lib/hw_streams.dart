@@ -4,6 +4,7 @@ void main() async {
   await streamWithAwaitFor();
   await streamWithListen();
   await periodicStream();
+  await streamController();
 }
 
 // Task 6: Стрім з чисел (fromIterable)
@@ -31,10 +32,31 @@ Future<void> periodicStream() async {
   print('Task 7: periodic');
   
   Stream<int> numbers = Stream.periodic(Duration(seconds: 1), (count) => count + 1).take(10);
-  numbers.listen((number) {
+  
+  await for (int number in numbers) {
     print('$number...');
-  });
+  };
 }
 
 // Task 8: Робота з StreamController
-// TODO: Реалізувати StreamController 
+Future<void> streamController() async {
+  print('Task 8: streamController');
+  
+  StreamController<String> controller = StreamController<String>();
+  
+  controller.stream.listen(
+    (data) {
+      print('Отримано: $data');
+    },
+    onDone: () {
+      print('Стрім завершено');
+    }
+  );
+  
+  controller.add("Hello");
+  controller.add("World");
+  controller.add("Dart");
+  controller.close();
+  
+  await controller.done;
+}
