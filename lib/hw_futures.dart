@@ -1,4 +1,7 @@
 void main() async {
+  String countdownResult = await delayedCountdown(5);
+  print(countdownResult);
+
   String userName = await fetchName();
   print('Мене звати $userName');
 
@@ -62,4 +65,10 @@ Future<void> parallel() async {
 }
 
 // Task 5: Зворотний відлік з затримкою
-// TODO: Реалізувати delayedCountdown()
+Future<String> delayedCountdown(int seconds) async {
+  for (int i = seconds; i >= 1; i--) {
+    print('$i...');
+    await Future.delayed(Duration(seconds: 1));
+  }
+  return 'Старт!';
+}
