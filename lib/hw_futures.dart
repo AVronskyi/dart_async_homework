@@ -7,6 +7,9 @@ void main() async {
 
   print('\n Task 3: sequential execution');
   await sequential();
+
+  print('\n Task 4: parallel execution');
+  await parallel();
 }
 
 // Task 1: Асинхронне отримання імені
@@ -46,7 +49,17 @@ Future<void> sequential() async {
 }
 
 // Task 4: Паралельне виконання Future
-// TODO: Реалізувати parallel execution
+Future<void> parallel() async {
+  Stopwatch stopwatch = Stopwatch();
+  stopwatch.start();
+  await Future.wait([
+    fetchName(),
+    fetchAge()
+  ]);
+  stopwatch.stop();
+  
+  print('Час виконання: ${stopwatch.elapsedMilliseconds} мс');
+}
 
 // Task 5: Зворотний відлік з затримкою
 // TODO: Реалізувати delayedCountdown()
